@@ -1,4 +1,4 @@
-const imageContainer = document.getElementById("image_container");
+const imageContainer = document.getElementById("image-container");
 const loader = document.getElementById("loader");
 
 let ready = false;
@@ -6,77 +6,69 @@ let imagesLoaded = 0;
 let totalImages = 0;
 let photosArray = [];
 
-// Unsplash API
+// API
 const count = 20;
-const apiKey = `cDJte-pPUT_rZAkkER9a8oN9aEz19Ga8FwJ5PhtsA_c`;
+const apiKey = "qnL1ZJieGpF5ANOUZH2GiHcwwgYQPJwkYaoJhIhfODs";
 const apiUrl = `https://api.unsplash.com/photos/random/?client_id=${apiKey}&count=${count}`;
 
-//Check if all images weere loaded
+//Check if all images were loaded
 function imageLoaded() {
   imagesLoaded++;
-  console.log(imagesLoaded);
   if (imagesLoaded === totalImages) {
     ready = true;
     loader.hidden = true;
   }
 }
 
-// Helper Function to Set Attributes on DOM Elements
+// Helper function
 function setAttributes(element, attributes) {
   for (const key in attributes) {
     element.setAttribute(key, attributes[key]);
   }
 }
 
-// Create Elements for Links & Photos, Add to DOM
+// Create elements for links and photos, add them to the DOM
 function displayPhotos() {
   imagesLoaded = 0;
   totalImages = photosArray.length;
-  console.log("total images", totalImages);
-  // Run function for each object in photosArray
   photosArray.forEach((photo) => {
-    // Create <a> to link to Unsplash
+    // Create <a>
     const item = document.createElement("a");
     setAttributes(item, {
       href: photo.links.html,
       target: "_blank",
     });
-    // Create <img> for photo
+    // Create <img>
     const img = document.createElement("img");
     setAttributes(img, {
       src: photo.urls.regular,
       alt: photo.alt_description,
       title: photo.alt_description,
     });
-    // Event Listener, check when each is finished loading
+    const container = document.createElement("div");
+    // Check when each is finished loading
     img.addEventListener("load", imageLoaded);
-    // Put <img> inside <a>, then put both inside imageContainer Element
+    // Put <img> inside <a>, then put both inside imageCointainer
     item.appendChild(img);
     imageContainer.appendChild(item);
   });
 }
 
-// Get photos from Unsplash API
+// Get photos from API
 async function getPhotos() {
   try {
     const response = await fetch(apiUrl);
     photosArray = await response.json();
     displayPhotos();
-  } catch (error) {
-    // Catch Error Here
-  }
+  } catch (err) {}
 }
 
 // Check to see if scrolling near bottom of page, Load more photos
 window.addEventListener("scroll", () => {
-  if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000 &&
-    ready
-  ) {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000 && ready) {
     ready = false;
     getPhotos();
   }
 });
 
-// On load
 getPhotos();
