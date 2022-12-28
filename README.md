@@ -1,4 +1,4 @@
 # Infinite-Scroll
 Unsplash API | Infinite Scroll
 
-live project: https://candid-dasik-ff0bce.netlify.app/
+live project: https://thunderous-muffin-2fda8b.netlify.app/
