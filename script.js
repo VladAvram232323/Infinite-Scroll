@@ -48,7 +48,7 @@ function displayPhotos() {
     const container = document.createElement("div");
     // Check when each is finished loading
     img.addEventListener("load", imageLoaded);
-    // Put <img> inside <a>, then put both inside imageCointainer
+    // <img> inside <a>, then put both inside imageCointainer
     item.appendChild(img);
     imageContainer.appendChild(item);
   });
